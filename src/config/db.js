@@ -1,15 +1,21 @@
-const { Client } = require("pg");
+const { Pool } = require("pg");
 
-const client = new Client({
+const pool = new Pool({
   user: process.env.DB_USER || "postgres",
   host: process.env.DB_HOST || "localhost",
   database: process.env.DB_NAME || "bankdb",
   password: process.env.DB_PASSWORD || "your_password",
-  port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 5432,
+  port: Number(process.env.DB_PORT) || 5432,
 });
 
-client.connect()
-  .then(() => console.log("Connected to PostgreSQL"))
-  .catch(err => console.error("Connection error:", err));
+pool
+  .connect()
+  .then((client) => {
+    console.log("✅ PostgreSQL Connected");
+    client.release(); // Return connection to the pool
+  })
+  .catch((err) => {
+    console.error("❌ PostgreSQL Connection Error:", err.message);
+  });
 
-module.exports = client;
+module.exports = pool;
