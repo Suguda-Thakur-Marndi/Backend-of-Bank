@@ -12,7 +12,7 @@ pool
   .connect()
   .then((client) => {
     console.log("✅ PostgreSQL Connected");
-    client.release(); // Return connection to the pool
+    client.release();
   })
   .catch((err) => {
     console.error("❌ PostgreSQL Connection Error:", err.message);

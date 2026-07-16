@@ -19,7 +19,7 @@ const createUser = async (user) => {
     "SELECT * FROM users WHERE email = $1 OR phone = $2",
     [email, phone]
   );
-
+  
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const query = `
@@ -38,12 +38,10 @@ const createUser = async (user) => {
     dob,
     gender,
   ];
-
   const result = await pool.query(query, values);
 
   return result.rows[0];
 };
-
 module.exports = {
   createUser,
 };
