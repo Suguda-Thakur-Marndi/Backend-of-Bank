@@ -11,6 +11,14 @@ const createUser = async (user) => {
     dob,
     gender,
   } = user;
+  if(!customerId || !fullName || !email || !phone || !password || !dob || !gender) {
+    throw new Error("All fields are required");
+  }
+
+  const existingUser = await pool.query(
+    "SELECT * FROM users WHERE email = $1 OR phone = $2",
+    [email, phone]
+  );
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
