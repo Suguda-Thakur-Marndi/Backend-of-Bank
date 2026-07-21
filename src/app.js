@@ -1,7 +1,9 @@
 const express = require('express');
+const authRoutes = require('./routes/auth.routes');
 const app = express();
 app.use(express.json());
-const pool = require('./config/db');
+app.use('/api/auth', authRoutes);
+
 app.get('/', async (req, res) => {
   try {
     const result = await pool.query('SELECT NOW()');
@@ -11,5 +13,4 @@ app.get('/', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 module.exports = app;
