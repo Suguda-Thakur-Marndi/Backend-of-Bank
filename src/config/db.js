@@ -12,9 +12,9 @@ const pool = new Pool({
       ? { rejectUnauthorized: false }
       : false,
 
-  max: 20,                  
-  idleTimeoutMillis: 30000, 
-  connectionTimeoutMillis: 5000, 
+  max: 20,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 5000,
 });
 
 const connectDB = async () => {

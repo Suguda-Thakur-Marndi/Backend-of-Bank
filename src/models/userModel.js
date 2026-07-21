@@ -5,35 +5,45 @@ const createUser = async (user) => {
   const {
     customerId,
     fullName,
+    mobileNumber, 
+    adharNumber,
+    nationality,
     email,
-    phone,
+    city,
+    state,
+    phonenumber,
     password,
     dob,
     gender,
   } = user;
-  if(!customerId || !fullName || !email || !phone || !password || !dob || !gender) {
+  if(!customerId || !fullName || !mobileNumber || !adharNumber || !nationality || !email || !city || !state || !phonenumber || !password || !dob || !gender) {
     throw new Error("All fields are required");
   }
 
   const existingUser = await pool.query(
-    "SELECT * FROM users WHERE email = $1 OR phone = $2",
-    [email, phone]
+    "SELECT * FROM users WHERE email = $1 OR phone = $2 OR adhar_number = $3",
+    [email, phonenumber, adharNumber]
   );
   
   const hashedPassword = await bcrypt.hash(password, 10);
 
   const query = `
     INSERT INTO users
-    (customer_id, full_name, email, phone, password, dob, gender)
-    VALUES ($1, $2, $3, $4, $5, $6, $7)
-    RETURNING id, customer_id, full_name, email, phone, dob, gender, created_at
+    (customer_id, full_name, mobile_number, adhar_number, nationality, email, city, state, phone, password, dob, gender)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+    RETURNING id, customer_id, full_name, mobile_number, adhar_number, nationality, email, city, state, phone, dob, gender, created_at
   `;
 
   const values = [
     customerId,
     fullName,
+    mobileNumber,
+    adharNumber,
+    nationality,
     email,
-    phone,
+    city,
+    state,
+    phonenumber,
     hashedPassword,
     dob,
     gender,
