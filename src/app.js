@@ -12,5 +12,7 @@ app.get('/', async (req, res) => {
     console.error('Error executing query', err.stack);
     res.status(500).json({ error: 'Internal Server Error' });
   }
-});
+}
+);
+
 module.exports = app;
