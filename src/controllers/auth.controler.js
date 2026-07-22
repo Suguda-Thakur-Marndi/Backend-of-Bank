@@ -11,7 +11,7 @@ function registerUser(req, res) {
       res.status(400).json({ error: error.message });
     });
 }
-funtion loginUser(req,res){
+function loginUser(req,res){
   const { email, password } = req.body;
   userModel.loginUser(email, password)
     .then((user) => {
